@@ -1,0 +1,35 @@
+{
+  "name": "stickersmash",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "EXPO_USE_PATH_ALIASES=1 expo start",
+    "android": "EXPO_USE_PATH_ALIASES=1 expo start --android",
+    "ios": "EXPO_USE_PATH_ALIASES=1 expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
+    "expo": "~48.0.5",
+    "expo-image-picker": "~14.1.1",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-native": "0.71.3",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-reanimated": "~2.14.4",
+    "react-native-view-shot": "3.5.0",
+    "expo-media-library": "~15.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@types/react": "~18.0.14",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.4"
+  },
+  "private": true
+}

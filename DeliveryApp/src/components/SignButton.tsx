@@ -1,4 +1,11 @@
-import {StyleSheet, Text, Pressable, View, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import {colors} from '@/common/constants';
 
@@ -7,6 +14,7 @@ interface SignButtonProps {
   onPress: () => void;
   isSecondary?: boolean;
   hasMarginBottom?: boolean;
+  isLoading: boolean;
 }
 
 const SignButton = ({
@@ -14,6 +22,7 @@ const SignButton = ({
   onPress,
   isSecondary,
   hasMarginBottom,
+  isLoading,
 }: SignButtonProps) => {
   return (
     <View
@@ -34,9 +43,13 @@ const SignButton = ({
               },
             }),
         ]}>
-        <Text style={[styles.text, isSecondary && styles.blackText]}>
-          {text}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator color="#fff" size={32} />
+        ) : (
+          <Text style={[styles.text, isSecondary && styles.blackText]}>
+            {text}
+          </Text>
+        )}
       </Pressable>
     </View>
   );

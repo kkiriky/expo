@@ -4,19 +4,23 @@ import {colors} from '@/common/constants';
 import BorderedInput from '@/components/BorderedInput';
 import SignButton from '@/components/SignButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useLogin} from '@/hooks/useAuth';
+import base64 from 'react-native-base64';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const passwordRef = useRef<TextInput>(null);
 
+  const {mutate: login, isLoading} = useLogin();
+
   const onSubmitEditingEmail = useCallback(() => {
     passwordRef.current?.focus();
   }, []);
 
   const onLogin = useCallback(() => {
-    console.log({email, password});
-  }, [email, password]);
+    login(base64.encode(`${email}:${password}`));
+  }, [email, login, password]);
 
   const onSubmitEditingPassword = useCallback(() => {
     onLogin();
@@ -59,8 +63,18 @@ const LoginScreen = () => {
       />
 
       <View style={styles.buttonGroups}>
-        <SignButton text="로그인" onPress={onLogin} hasMarginBottom />
-        <SignButton text="회원가입" onPress={() => {}} isSecondary />
+        <SignButton
+          text="로그인"
+          onPress={onLogin}
+          hasMarginBottom
+          isLoading={isLoading}
+        />
+        <SignButton
+          text="회원가입"
+          onPress={() => {}}
+          isSecondary
+          isLoading={false}
+        />
       </View>
     </KeyboardAwareScrollView>
   );

@@ -1,10 +1,11 @@
 import {Platform} from 'react-native';
 
 export const colors = {
-  prmary: '#22a45d',
+  primary: '#22a45d',
+  activePrimary: '#0fba5d',
   bodyText: '#868686',
-  inputBackgroundColor: '#fbfbfb',
-  inputBorderColor: '#f3f2f2',
+  inputBackground: '#fbfbfb',
+  inputBorder: '#f3f2f2',
 };
 
 const localhost = Platform.OS === 'android' ? '10.0.2.2' : '127.0.0.1';

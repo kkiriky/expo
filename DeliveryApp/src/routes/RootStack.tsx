@@ -11,6 +11,11 @@ const RootStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="MainTab"
         component={MainTab}
         options={{title: 'Kkiri Delivery'}}
@@ -21,7 +26,6 @@ const RootStack = () => {
       />
       <Stack.Screen name="OrderComplete" component={OrderCompleteScreen} />
       {/*  */}
-      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 };

@@ -1,7 +1,7 @@
 import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import {colors} from '@/common/constants';
+import {colors} from '@/common/constants/colors';
 import {useLogout} from '@/hooks/useAuth';
 
 const ProfileScreen = () => {

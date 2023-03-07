@@ -6,7 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainTabParamList} from './routes.types';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {colors} from '@/common/constants';
+import {colors} from '@/common/constants/colors';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 

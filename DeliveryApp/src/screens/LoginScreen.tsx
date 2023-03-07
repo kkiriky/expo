@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useCallback, useRef, useState} from 'react';
-import {colors} from '@/common/constants';
+import {colors} from '@/common/constants/colors';
 import BorderedInput from '@/components/BorderedInput';
 import SignButton from '@/components/SignButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -82,15 +82,12 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: 16,
-    // paddingTop: 16,
-    // paddingBottom: 16,
     padding: 16,
   },
   title: {
     fontSize: 28,
-    fontWeight: '600',
     marginBottom: 8,
+    fontWeight: '600',
   },
   subText: {
     color: colors.bodyText,

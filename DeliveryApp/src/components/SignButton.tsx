@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {colors} from '@/common/constants';
+import {colors} from '@/common/constants/colors';
 
 interface SignButtonProps {
   text: string;
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
       },
       ios: {
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 10},
-        shadowOpacity: 0.7,
-        shadowRadius: 5,
+        shadowOffset: {width: 0, height: 5},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
       },
     }),
   },

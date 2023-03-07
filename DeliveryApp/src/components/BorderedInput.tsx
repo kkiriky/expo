@@ -5,7 +5,7 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
-import {colors} from '@/common/constants';
+import {colors} from '@/common/constants/colors';
 
 interface BorderedInputProps {
   placeholder: string;
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 48,
     paddingHorizontal: 8,
+    fontSize: 14,
   },
   marginBottom: {
     marginBottom: 16,

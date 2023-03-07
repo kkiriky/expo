@@ -5,6 +5,18 @@ import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {RecoilRoot} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import * as SplashScreen from 'expo-splash-screen';
+// import {
+//   useFonts,
+//   NotoSansKR_100Thin,
+//   NotoSansKR_300Light,
+//   NotoSansKR_400Regular,
+//   NotoSansKR_500Medium,
+//   NotoSansKR_700Bold,
+//   NotoSansKR_900Black,
+// } from '@expo-google-fonts/noto-sans-kr';
+
+SplashScreen.preventAutoHideAsync();
 
 const client = new QueryClient({
   defaultOptions: {
@@ -23,6 +35,19 @@ const theme = {
 };
 
 export default function App() {
+  // const [fontsLoaded] = useFonts({
+  //   NotoSansKR_100Thin,
+  //   NotoSansKR_300Light,
+  //   NotoSansKR_400Regular,
+  //   NotoSansKR_500Medium,
+  //   NotoSansKR_700Bold,
+  //   NotoSansKR_900Black,
+  // });
+
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
+
   return (
     <>
       <StatusBar style="auto" />

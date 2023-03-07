@@ -1,10 +1,15 @@
 import {Pagination} from '@/api/api.types';
-import {getRestaurants} from '@/api/restaurants/restaurantsApi';
+import {
+  getRestaurantDetail,
+  getRestaurants,
+  getReviews,
+} from '@/api/restaurants/restaurantsApi';
 import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
 import {
   InfiniteData,
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from 'react-query';
 
@@ -42,4 +47,26 @@ export const useRestaurantsRefresh = () => {
       });
     },
   });
+};
+
+export const useGetRestaurantDetail = (rid: string) => {
+  return useQuery(['restaurant', rid], () => getRestaurantDetail(rid), {
+    enabled: !!rid,
+  });
+};
+
+export const useGetReviews = (rid: string) => {
+  return useInfiniteQuery(
+    ['reviews', rid],
+    ({pageParam}) => getReviews({rid, after: pageParam}),
+    {
+      getNextPageParam: lastPage => {
+        if (!lastPage.meta.hasMore) {
+          return undefined;
+        }
+
+        return lastPage.data[lastPage.data.length - 1].id;
+      },
+    },
+  );
 };

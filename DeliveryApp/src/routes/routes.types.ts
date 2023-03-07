@@ -1,3 +1,4 @@
+import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,
@@ -8,7 +9,9 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 export type RootStackParamList = {
   MainTab: NavigatorScreenParams<MainTabParamList>;
   Login: undefined;
-  RestaurantDetail: undefined;
+  RestaurantDetail: {
+    restaurant: Restaurant;
+  };
   OrderComplete: undefined;
 };
 

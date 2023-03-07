@@ -8,34 +8,47 @@ import {baseURL} from '@/api';
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
+  isDetail?: boolean;
+  detail?: string;
 }
 
-const RestaurantCard = ({restaurant}: RestaurantCardProps) => {
+const RestaurantCard = ({
+  restaurant,
+  isDetail,
+  detail,
+}: RestaurantCardProps) => {
   return (
-    <View>
+    <>
       <Image
         source={{uri: `${baseURL}${restaurant.thumbUrl}`}}
-        style={styles.image}
+        style={[styles.image, isDetail && styles.detailImage]}
       />
-      <Text style={styles.title}>{restaurant.name}</Text>
-      <Text style={styles.tags}>{restaurant.tags.join('·')}</Text>
 
-      <View style={[globalStyles.row, styles.metaContainer]}>
-        <RestaurantCardMeta iconName="star" text={restaurant.ratings} />
-        <Text>·</Text>
-        <RestaurantCardMeta iconName="receipt" text={restaurant.ratingsCount} />
-        <Text>·</Text>
-        <RestaurantCardMeta
-          iconName="timelapse"
-          text={restaurant.deliveryTime}
-        />
-        <Text>·</Text>
-        <RestaurantCardMeta
-          iconName="monetization-on"
-          text={restaurant.deliveryFee}
-        />
+      <View style={isDetail && styles.detailLayout}>
+        <Text style={styles.title}>{restaurant.name}</Text>
+        <Text style={styles.tags}>{restaurant.tags.join('·')}</Text>
+
+        <View style={[globalStyles.row, styles.metaContainer]}>
+          <RestaurantCardMeta iconName="star" text={restaurant.ratings} />
+          <Text>·</Text>
+          <RestaurantCardMeta
+            iconName="receipt"
+            text={restaurant.ratingsCount}
+          />
+          <Text>·</Text>
+          <RestaurantCardMeta
+            iconName="timelapse"
+            text={restaurant.deliveryTime}
+          />
+          <Text>·</Text>
+          <RestaurantCardMeta
+            iconName="monetization-on"
+            text={restaurant.deliveryFee}
+          />
+        </View>
+        {isDetail && detail && <Text style={styles.detail}>{detail}</Text>}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -63,5 +76,16 @@ const styles = StyleSheet.create({
   },
   meta: {
     gap: 4,
+  },
+  detailImage: {
+    borderRadius: 0,
+  },
+  detailLayout: {
+    paddingHorizontal: 16,
+  },
+  detail: {
+    color: colors.bodyText,
+    marginVertical: 12,
+    fontSize: 12,
   },
 });

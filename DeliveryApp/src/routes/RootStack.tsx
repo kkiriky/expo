@@ -6,7 +6,6 @@ import MainTab from './MainTab';
 import {RootStackParamList} from './routes.types';
 import {useRecoilValue} from 'recoil';
 import {userState} from '@/atoms/user';
-import MainTabHeader from '@/components/MainTabHeader';
 import {useIntercept} from '@/hooks/useIntercept';
 import {useInitialize} from '@/hooks/useInitialize';
 
@@ -26,12 +25,19 @@ const RootStack = () => {
             name="MainTab"
             component={MainTab}
             options={{
-              header: Header,
+              headerTitle: 'Delivery',
+              headerShadowVisible: false,
+              headerTitleAlign: 'center',
             }}
           />
           <Stack.Screen
             name="RestaurantDetail"
             component={RestaurantDetailScreen}
+            options={{
+              headerShadowVisible: false,
+              headerTitle: '',
+              headerTitleStyle: {fontWeight: '600'},
+            }}
           />
           <Stack.Screen name="OrderComplete" component={OrderCompleteScreen} />
         </>
@@ -45,7 +51,5 @@ const RootStack = () => {
     </Stack.Navigator>
   );
 };
-
-const Header = () => <MainTabHeader />;
 
 export default RootStack;

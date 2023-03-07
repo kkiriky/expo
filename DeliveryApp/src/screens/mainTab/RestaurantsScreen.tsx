@@ -2,8 +2,8 @@ import {
   View,
   FlatList,
   StyleSheet,
-  ActivityIndicator,
   RefreshControl,
+  Pressable,
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -12,8 +12,10 @@ import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
 import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
+import {MainTabScreenProps} from '@/routes/routes.types';
+import ListLoading from '@/components/ListLoading';
 
-const RestaurantsScreen = () => {
+const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
   const {data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage} =
     useGetRestaurants();
   const {mutate: refresh, isLoading: refreshing} = useRestaurantsRefresh();
@@ -52,26 +54,27 @@ const RestaurantsScreen = () => {
     refresh(undefined);
   }, [refresh, refreshing]);
 
+  const onPress = useCallback(
+    (restaurant: Restaurant) => () =>
+      navigation.push('RestaurantDetail', {restaurant}),
+    [navigation],
+  );
+
   return (
-    <View style={[globalStyles.full, styles.layout]}>
+    <View style={globalStyles.full}>
       <FlatList
         data={restaurants}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={Separator}
-        renderItem={({item}) => <RestaurantCard restaurant={item} />}
-        onEndReachedThreshold={0.9}
+        renderItem={({item}) => (
+          <Pressable onPress={onPress(item)}>
+            <RestaurantCard restaurant={item} />
+          </Pressable>
+        )}
+        contentContainerStyle={styles.layout}
+        onEndReachedThreshold={1}
         onEndReached={onEndReached}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <ActivityIndicator
-              color={colors.primary}
-              size="large"
-              style={styles.loading}
-            />
-          ) : (
-            <View />
-          )
-        }
+        ListFooterComponent={() => ListLoading(isFetchingNextPage)}
         refreshControl={
           <RefreshControl
             onRefresh={onRefresh}
@@ -93,9 +96,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 12,
-  },
-  loading: {
-    paddingVertical: 28,
   },
 });
 

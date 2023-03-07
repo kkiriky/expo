@@ -10,7 +10,12 @@ export const useIntercept = () => {
 
   useEffect(() => {
     client.interceptors.request.use(req => {
-      console.log(`[${req.method?.toUpperCase()}] ${req.url}`);
+      const params = new URLSearchParams(req.params).toString();
+      console.log(
+        `[${req.method?.toUpperCase()}] ${req.url}${
+          params ? `?${params}` : ''
+        }`,
+      );
       return req;
     });
 

@@ -1,4 +1,3 @@
-import {StyleSheet} from 'react-native';
 import {StatusBar} from 'expo-status-bar';
 import RootStack from './routes/RootStack';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
@@ -6,6 +5,7 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {RecoilRoot} from 'recoil';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import * as SplashScreen from 'expo-splash-screen';
+import globalStyles from './styles/globalStyles';
 // import {
 //   useFonts,
 //   NotoSansKR_100Thin,
@@ -56,7 +56,7 @@ export default function App() {
         <QueryClientProvider client={client}>
           <NavigationContainer theme={theme}>
             <SafeAreaProvider>
-              <SafeAreaView style={styles.fullscreen}>
+              <SafeAreaView style={globalStyles.full}>
                 <RootStack />
               </SafeAreaView>
             </SafeAreaProvider>
@@ -66,9 +66,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  fullscreen: {
-    flex: 1,
-  },
-});

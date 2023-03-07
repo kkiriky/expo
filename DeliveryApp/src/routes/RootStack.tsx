@@ -6,29 +6,17 @@ import MainTab from './MainTab';
 import {RootStackParamList} from './routes.types';
 import {useRecoilValue} from 'recoil';
 import {userState} from '@/atoms/user';
-import {useEffect} from 'react';
-import authStorage from '@/storages/authStorage';
-import {applyToken} from '@/api';
-import {useGetMe} from '@/hooks/useUser';
+import MainTabHeader from '@/components/MainTabHeader';
+import {useIntercept} from '@/hooks/useIntercept';
+import {useInitialize} from '@/hooks/useInitialize';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
   const user = useRecoilValue(userState);
-  const {mutate: getMe} = useGetMe();
 
-  useEffect(() => {
-    const init = async () => {
-      const accessToken = await authStorage.getAccessToken();
-      if (!accessToken) {
-        return;
-      }
-
-      applyToken(accessToken);
-      getMe();
-    };
-    init();
-  }, [getMe]);
+  useInitialize();
+  useIntercept();
 
   return (
     <Stack.Navigator>
@@ -37,7 +25,9 @@ const RootStack = () => {
           <Stack.Screen
             name="MainTab"
             component={MainTab}
-            options={{title: 'Kkiri Delivery'}}
+            options={{
+              header: Header,
+            }}
           />
           <Stack.Screen
             name="RestaurantDetail"
@@ -55,5 +45,7 @@ const RootStack = () => {
     </Stack.Navigator>
   );
 };
+
+const Header = () => <MainTabHeader />;
 
 export default RootStack;

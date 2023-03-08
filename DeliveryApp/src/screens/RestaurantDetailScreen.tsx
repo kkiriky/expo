@@ -1,25 +1,32 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {RootStackScreenProps} from '@/routes/routes.types';
-import {RestaurantDetail, Review} from '@/api/restaurants/restaurants.types';
+import {
+  RestaurantDetail,
+  RestaurantProduct,
+  Review,
+} from '@/api/restaurants/restaurants.types';
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
 import {useGetRestaurantDetail, useGetReviews} from '@/hooks/useRestaurants';
 import ProductCard from '@/components/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import ListLoading from '@/components/ListLoading';
 import FloatingActionButton from '@/components/FloatingActionButton';
+import {useAddToBasket, useGetBaskets} from '@/hooks/useUser';
 
 const RestaurantDetailScreen = ({
   route,
   navigation,
 }: RootStackScreenProps<'RestaurantDetail'>) => {
+  // Restaurant Detail
   const {data} = useGetRestaurantDetail(route.params.restaurant.id);
-  const {
-    data: pagedReviews,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useGetReviews(route.params.restaurant.id);
-
   const restaurantDetail = useMemo(() => {
     if (!data) {
       return route.params.restaurant as RestaurantDetail;
@@ -27,19 +34,30 @@ const RestaurantDetailScreen = ({
     return data;
   }, [data, route.params.restaurant]);
 
+  // Reviews
+  const {
+    data: pagedReviews,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetReviews(route.params.restaurant.id);
   const reviews = useMemo(() => {
     if (!pagedReviews) {
       return null;
     }
     const items = pagedReviews.pages.map(page => page.data);
-
     return ([] as Review[]).concat(...items);
   }, [pagedReviews]);
 
+  // Baskets
+  const {data: baskets} = useGetBaskets();
+  const {addToBasket} = useAddToBasket();
+
+  // Set Header Title
   useEffect(() => {
     navigation.setOptions({headerTitle: restaurantDetail.name});
   }, [navigation, restaurantDetail.name]);
 
+  // Callbacks
   const onEndReached = useCallback(() => {
     if (isFetchingNextPage) {
       return;
@@ -47,6 +65,13 @@ const RestaurantDetailScreen = ({
 
     fetchNextPage();
   }, [fetchNextPage, isFetchingNextPage]);
+
+  const onAddToBaseket = useCallback(
+    (restaurantProduct: RestaurantProduct) => () => {
+      addToBasket({...restaurantProduct, restaurant: restaurantDetail});
+    },
+    [addToBasket, restaurantDetail],
+  );
 
   return (
     <>
@@ -63,11 +88,20 @@ const RestaurantDetailScreen = ({
               <View style={styles.menuContainer}>
                 <Text style={styles.menu}>메뉴</Text>
                 {restaurantDetail.products.map((product, i) => (
-                  <ProductCard
+                  <Pressable
                     key={product.id}
-                    product={product}
-                    hasMarginBottom={i !== restaurantDetail.products.length - 1}
-                  />
+                    onPress={onAddToBaseket(product)}
+                    android_ripple={{color: '#eee'}}
+                    style={({pressed}) =>
+                      pressed && Platform.select({ios: styles.pressed})
+                    }>
+                    <ProductCard
+                      product={product}
+                      hasMarginBottom={
+                        i !== restaurantDetail.products.length - 1
+                      }
+                    />
+                  </Pressable>
                 ))}
               </View>
             )}
@@ -85,7 +119,7 @@ const RestaurantDetailScreen = ({
         onEndReached={onEndReached}
         ListFooterComponent={<ListLoading isLoading={isFetchingNextPage} />}
       />
-      <FloatingActionButton onPress={() => {}} count={1} />
+      <FloatingActionButton onPress={() => {}} count={baskets.length} />
     </>
   );
 };
@@ -113,6 +147,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 8,
     paddingHorizontal: 16,
+  },
+  productCardWrapper: {
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  pressed: {
+    backgroundColor: '#eee',
   },
 });
 

@@ -2,7 +2,7 @@ import {StatusBar} from 'expo-status-bar';
 import RootStack from './routes/RootStack';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {RecoilRoot} from 'recoil';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
 
 // import {

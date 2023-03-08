@@ -11,13 +11,13 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from 'react-query';
+} from '@tanstack/react-query';
 
 type InfiniteRestaurants = InfiniteData<Pagination<Restaurant>>;
 
 export const useGetRestaurants = (count?: number) => {
   return useInfiniteQuery(
-    'restaurants',
+    ['restaurants'],
     ({pageParam}) => getRestaurants({after: pageParam, count}),
     {
       getNextPageParam: lastPage => {
@@ -36,7 +36,7 @@ export const useRefreshRestaurants = () => {
 
   return useMutation(() => getRestaurants(), {
     onSuccess: data => {
-      queryClient.setQueryData<InfiniteRestaurants>('restaurants', {
+      queryClient.setQueryData<InfiniteRestaurants>(['restaurants'], {
         pageParams: [data.data[0].id],
         pages: [data],
       });

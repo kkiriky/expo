@@ -5,7 +5,7 @@ import {userState} from '@/atoms/user';
 import authStorage from '@/storages/authStorage';
 import {useCallback, useState} from 'react';
 import {ToastAndroid} from 'react-native';
-import {useMutation} from 'react-query';
+import {useMutation} from '@tanstack/react-query';
 import {useSetRecoilState} from 'recoil';
 import {useGetMe} from './useUser';
 

@@ -6,11 +6,11 @@ import {
   useInfiniteQuery,
   useMutation,
   useQueryClient,
-} from 'react-query';
+} from '@tanstack/react-query';
 
 export const useGetProducts = () => {
   return useInfiniteQuery(
-    'products',
+    ['products'],
     ({pageParam}) => getProducts({after: pageParam}),
     {
       getNextPageParam: lastPage => {
@@ -29,10 +29,13 @@ export const useRefreshProducts = () => {
 
   return useMutation(() => getProducts(), {
     onSuccess: data => {
-      queryClient.setQueryData<InfiniteData<Pagination<Product>>>('products', {
-        pageParams: [data.data[0].id],
-        pages: [data],
-      });
+      queryClient.setQueryData<InfiniteData<Pagination<Product>>>(
+        ['products'],
+        {
+          pageParams: [data.data[0].id],
+          pages: [data],
+        },
+      );
     },
   });
 };

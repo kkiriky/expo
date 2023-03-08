@@ -8,31 +8,23 @@ import {
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {RootStackScreenProps} from '@/routes/routes.types';
-import {
-  RestaurantDetail,
-  RestaurantProduct,
-  Review,
-} from '@/api/restaurants/restaurants.types';
+import {RestaurantProduct, Review} from '@/api/restaurants/restaurants.types';
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
 import {useGetRestaurantDetail, useGetReviews} from '@/hooks/useRestaurants';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/product/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import ListLoading from '@/components/ListLoading';
 import FloatingActionButton from '@/components/FloatingActionButton';
-import {useAddToBasket, useGetBaskets} from '@/hooks/useUser';
+import {useAddToBasket, useGetBaskets} from '@/hooks/useBaskets';
 
 const RestaurantDetailScreen = ({
   route,
   navigation,
 }: RootStackScreenProps<'RestaurantDetail'>) => {
   // Restaurant Detail
-  const {data} = useGetRestaurantDetail(route.params.restaurant.id);
-  const restaurantDetail = useMemo(() => {
-    if (!data) {
-      return route.params.restaurant as RestaurantDetail;
-    }
-    return data;
-  }, [data, route.params.restaurant]);
+  const {data: restaurantDetail} = useGetRestaurantDetail(
+    route.params.restaurant,
+  );
 
   // Reviews
   const {
@@ -71,6 +63,11 @@ const RestaurantDetailScreen = ({
       addToBasket({...restaurantProduct, restaurant: restaurantDetail});
     },
     [addToBasket, restaurantDetail],
+  );
+
+  const goToBasketScreen = useCallback(
+    () => navigation.push('Basket'),
+    [navigation],
   );
 
   return (
@@ -119,7 +116,13 @@ const RestaurantDetailScreen = ({
         onEndReached={onEndReached}
         ListFooterComponent={<ListLoading isLoading={isFetchingNextPage} />}
       />
-      <FloatingActionButton onPress={() => {}} count={baskets.length} />
+
+      {restaurantDetail?.detail && (
+        <FloatingActionButton
+          onPress={goToBasketScreen}
+          count={baskets?.length ?? 0}
+        />
+      )}
     </>
   );
 };

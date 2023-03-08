@@ -8,13 +8,14 @@ import {
 import React, {useCallback, useMemo} from 'react';
 import {useGetProducts, useRefreshProducts} from '@/hooks/useProduct';
 import {Product} from '@/api/products/products.types';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/product/ProductCard';
 import ListLoading from '@/components/ListLoading';
 import {colors} from '@/common/constants/colors';
 import {MainTabScreenProps} from '@/routes/routes.types';
+import CenterLoading from '@/components/CenterLoading';
 
 const ProductsScreen = ({navigation}: MainTabScreenProps<'Products'>) => {
-  const {data, fetchNextPage, hasNextPage, isFetchingNextPage} =
+  const {data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage} =
     useGetProducts();
   const {mutate: refresh, isLoading: refreshing} = useRefreshProducts();
 
@@ -51,6 +52,10 @@ const ProductsScreen = ({navigation}: MainTabScreenProps<'Products'>) => {
       }),
     [navigation],
   );
+
+  if (isLoading) {
+    return <CenterLoading />;
+  }
 
   return (
     <FlatList

@@ -13,6 +13,7 @@ export type RootStackParamList = {
     restaurant: Restaurant;
   };
   OrderComplete: undefined;
+  Basket: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

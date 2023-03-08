@@ -2,7 +2,7 @@ import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useCallback, useRef, useState} from 'react';
 import {colors} from '@/common/constants/colors';
 import BorderedInput from '@/components/BorderedInput';
-import SignButton from '@/components/SignButton';
+import CustomButton from '@/components/CustomButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useLogin} from '@/hooks/useAuth';
 import base64 from 'react-native-base64';
@@ -65,13 +65,13 @@ const LoginScreen = () => {
         />
 
         <View style={styles.buttonGroups}>
-          <SignButton
+          <CustomButton
             text="로그인"
             onPress={onLogin}
             hasMarginBottom
             isLoading={isLoading}
           />
-          <SignButton
+          <CustomButton
             text="회원가입"
             onPress={() => {}}
             isSecondary

@@ -15,14 +15,18 @@ interface SignButtonProps {
   isSecondary?: boolean;
   hasMarginBottom?: boolean;
   isLoading: boolean;
+  height?: number;
+  fontSize?: number;
 }
 
-const SignButton = ({
+const CustomButton = ({
   text,
   onPress,
   isSecondary,
   hasMarginBottom,
   isLoading,
+  height,
+  fontSize,
 }: SignButtonProps) => {
   return (
     <View
@@ -30,13 +34,20 @@ const SignButton = ({
         styles.buttonWrapper,
         isSecondary && styles.whiteBackground,
         hasMarginBottom && styles.marginBottom,
+        isLoading && styles.loadingBackground,
       ]}>
       <Pressable
-        onPress={onPress}
-        android_ripple={{color: !isSecondary ? colors.activePrimary : '#eee'}}
+        onPress={isLoading ? null : onPress}
+        android_ripple={
+          isLoading
+            ? null
+            : {color: !isSecondary ? colors.activePrimary : '#eee'}
+        }
         style={({pressed}) => [
           styles.button,
-          pressed &&
+          !!height && {height},
+          !isLoading &&
+            pressed &&
             Platform.select({
               ios: {
                 backgroundColor: !isSecondary ? colors.activePrimary : '#eee',
@@ -46,7 +57,12 @@ const SignButton = ({
         {isLoading ? (
           <ActivityIndicator color="#fff" size={32} />
         ) : (
-          <Text style={[styles.text, isSecondary && styles.blackText]}>
+          <Text
+            style={[
+              styles.text,
+              isSecondary && styles.blackText,
+              !!fontSize && {fontSize},
+            ]}>
             {text}
           </Text>
         )}
@@ -55,7 +71,7 @@ const SignButton = ({
   );
 };
 
-export default SignButton;
+export default CustomButton;
 
 const styles = StyleSheet.create({
   buttonWrapper: {
@@ -92,5 +108,8 @@ const styles = StyleSheet.create({
   },
   blackText: {
     color: '#000',
+  },
+  loadingBackground: {
+    backgroundColor: '#ccc',
   },
 });

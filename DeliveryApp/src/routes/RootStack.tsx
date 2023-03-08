@@ -8,6 +8,7 @@ import {useRecoilValue} from 'recoil';
 import {userState} from '@/atoms/user';
 import {useIntercept} from '@/hooks/useIntercept';
 import {useInitialize} from '@/hooks/useInitialize';
+import BasketScreen from '@/screens/BasketScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -18,7 +19,12 @@ const RootStack = () => {
   useIntercept();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShadowVisible: false,
+        headerTitleStyle: {fontWeight: '600'},
+        headerTitleAlign: 'center',
+      }}>
       {user ? (
         <>
           <Stack.Screen
@@ -26,20 +32,29 @@ const RootStack = () => {
             component={MainTab}
             options={{
               headerTitle: 'Delivery',
-              headerShadowVisible: false,
-              headerTitleAlign: 'center',
             }}
           />
           <Stack.Screen
             name="RestaurantDetail"
             component={RestaurantDetailScreen}
             options={{
-              headerShadowVisible: false,
               headerTitle: '',
-              headerTitleStyle: {fontWeight: '600'},
             }}
           />
-          <Stack.Screen name="OrderComplete" component={OrderCompleteScreen} />
+          <Stack.Screen
+            name="Basket"
+            component={BasketScreen}
+            options={{
+              headerTitle: '장바구니',
+            }}
+          />
+          <Stack.Screen
+            name="OrderComplete"
+            component={OrderCompleteScreen}
+            options={{
+              headerTitle: '주문완료',
+            }}
+          />
         </>
       ) : (
         <Stack.Screen

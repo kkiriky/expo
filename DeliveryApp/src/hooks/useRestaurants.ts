@@ -4,7 +4,10 @@ import {
   getRestaurants,
   getReviews,
 } from '@/api/restaurants/restaurants';
-import {Restaurant} from '@/api/restaurants/restaurants.types';
+import {
+  Restaurant,
+  RestaurantDetail,
+} from '@/api/restaurants/restaurants.types';
 import {
   InfiniteData,
   useInfiniteQuery,
@@ -44,10 +47,16 @@ export const useRefreshRestaurants = () => {
   });
 };
 
-export const useGetRestaurantDetail = (rid: string) => {
-  return useQuery(['restaurant', rid], () => getRestaurantDetail(rid), {
-    enabled: !!rid,
-  });
+export const useGetRestaurantDetail = (restaurant: Restaurant) => {
+  return useQuery(
+    ['restaurant', restaurant.id],
+    () => getRestaurantDetail(restaurant.id),
+    {
+      enabled: !!restaurant.id,
+      initialData: restaurant as RestaurantDetail,
+      // placeholderData: restaurant,
+    },
+  );
 };
 
 export const useGetReviews = (rid: string) => {

@@ -3,7 +3,7 @@ import React from 'react';
 import {colors} from '@/common/constants/colors';
 import globalStyles from '@/styles/globalStyles';
 import RestaurantCardMeta from './RestaurantCardMeta';
-import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
+import {Restaurant} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
 
 interface RestaurantCardProps {

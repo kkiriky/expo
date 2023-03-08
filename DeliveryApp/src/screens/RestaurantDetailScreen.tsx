@@ -1,12 +1,13 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {RootStackScreenProps} from '@/routes/routes.types';
-import {RestaurantDetail, Review} from '@/api/restaurants/restaurantsApi.types';
+import {RestaurantDetail, Review} from '@/api/restaurants/restaurants.types';
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
 import {useGetRestaurantDetail, useGetReviews} from '@/hooks/useRestaurants';
 import ProductCard from '@/components/ProductCard';
 import ReviewCard from '@/components/ReviewCard';
 import ListLoading from '@/components/ListLoading';
+import FloatingActionButton from '@/components/FloatingActionButton';
 
 const RestaurantDetailScreen = ({
   route,
@@ -48,41 +49,44 @@ const RestaurantDetailScreen = ({
   }, [fetchNextPage, isFetchingNextPage]);
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <>
-          <RestaurantCard
-            restaurant={restaurantDetail}
-            isDetail
-            detail={restaurantDetail.detail}
-          />
+    <>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <RestaurantCard
+              restaurant={restaurantDetail}
+              isDetail
+              detail={restaurantDetail.detail}
+            />
 
-          {restaurantDetail.products && (
-            <View style={styles.menuContainer}>
-              <Text style={styles.menu}>메뉴</Text>
-              {restaurantDetail.products.map((product, i) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  hasMarginBottom={i !== restaurantDetail.products.length - 1}
-                />
-              ))}
-            </View>
-          )}
-          {restaurantDetail.products && !!reviews?.length && (
-            <Text style={styles.review}>리뷰</Text>
-          )}
-        </>
-      }
-      data={reviews}
-      keyExtractor={item => item.id}
-      ItemSeparatorComponent={Separator}
-      renderItem={({item}) => <ReviewCard review={item} />}
-      contentContainerStyle={styles.container}
-      onEndReachedThreshold={0.75}
-      onEndReached={onEndReached}
-      ListFooterComponent={() => ListLoading(isFetchingNextPage)}
-    />
+            {restaurantDetail.products && (
+              <View style={styles.menuContainer}>
+                <Text style={styles.menu}>메뉴</Text>
+                {restaurantDetail.products.map((product, i) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    hasMarginBottom={i !== restaurantDetail.products.length - 1}
+                  />
+                ))}
+              </View>
+            )}
+            {restaurantDetail.products && !!reviews?.length && (
+              <Text style={styles.review}>리뷰</Text>
+            )}
+          </>
+        }
+        data={reviews}
+        keyExtractor={item => item.id}
+        ItemSeparatorComponent={Separator}
+        renderItem={({item}) => <ReviewCard review={item} />}
+        contentContainerStyle={styles.container}
+        onEndReachedThreshold={0.75}
+        onEndReached={onEndReached}
+        ListFooterComponent={<ListLoading isLoading={isFetchingNextPage} />}
+      />
+      <FloatingActionButton onPress={() => {}} count={1} />
+    </>
   );
 };
 

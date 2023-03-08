@@ -3,7 +3,7 @@ import authStorage from '@/storages/authStorage';
 import {applyToken, client} from '@/api';
 import {CommonError} from '@/api/api.types';
 import {useLogout} from './useAuth';
-import {reIssueAccessToken} from '@/api/auth/authApi';
+import {reIssueAccessToken} from '@/api/auth/auth';
 
 export const useIntercept = () => {
   const {mutate: logout} = useLogout();

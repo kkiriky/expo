@@ -1,5 +1,5 @@
 import {PaginationParams} from '../api.types';
-import {User} from '../user/userApi.types';
+import {User} from '../user/user.types';
 
 export interface Restaurant {
   id: string;

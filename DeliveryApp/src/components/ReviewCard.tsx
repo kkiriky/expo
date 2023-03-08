@@ -3,7 +3,7 @@ import React from 'react';
 import globalStyles from '@/styles/globalStyles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {colors} from '@/common/constants/colors';
-import {Review} from '@/api/restaurants/restaurantsApi.types';
+import {Review} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
 
 interface ReviewCardProps {

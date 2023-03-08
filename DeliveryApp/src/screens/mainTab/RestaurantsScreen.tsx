@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo} from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import {useGetRestaurants, useRestaurantsRefresh} from '@/hooks/useRestaurants';
-import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
+import {useGetRestaurants, useRefreshRestaurants} from '@/hooks/useRestaurants';
+import {Restaurant} from '@/api/restaurants/restaurants.types';
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
 import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
@@ -18,7 +18,7 @@ import ListLoading from '@/components/ListLoading';
 const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
   const {data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage} =
     useGetRestaurants();
-  const {mutate: refresh, isLoading: refreshing} = useRestaurantsRefresh();
+  const {mutate: refresh, isLoading: refreshing} = useRefreshRestaurants();
 
   const restaurants = useMemo(() => {
     if (!data) {
@@ -51,7 +51,7 @@ const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
       return;
     }
 
-    refresh(undefined);
+    refresh();
   }, [refresh, refreshing]);
 
   const onPress = useCallback(
@@ -74,7 +74,7 @@ const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
         contentContainerStyle={styles.layout}
         onEndReachedThreshold={1}
         onEndReached={onEndReached}
-        ListFooterComponent={() => ListLoading(isFetchingNextPage)}
+        ListFooterComponent={<ListLoading isLoading={isFetchingNextPage} />}
         refreshControl={
           <RefreshControl
             onRefresh={onRefresh}

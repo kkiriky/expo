@@ -2,7 +2,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
-import {RestaurantProduct} from '@/api/restaurants/restaurantsApi.types';
+import {RestaurantProduct} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
 
 interface ProductCardProps {

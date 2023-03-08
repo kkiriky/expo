@@ -1,5 +1,5 @@
 import {client} from '..';
-import {LoginResponse, ReIssueAccesTokenResponse} from './authApi.types';
+import {LoginResponse, ReIssueAccesTokenResponse} from './auth.types';
 
 export const login = async (loginInfo: string) => {
   const {data} = await client.post<LoginResponse>('/auth/login', null, {

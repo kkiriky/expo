@@ -5,7 +5,7 @@ import {
   Restaurant,
   RestaurantDetail,
   Review,
-} from './restaurantsApi.types';
+} from './restaurants.types';
 
 export const getRestaurants = async (params?: PaginationParams) => {
   const _count = {count: params?.count ?? 20};

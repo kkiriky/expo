@@ -1,4 +1,4 @@
-import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
+import {Restaurant} from '@/api/restaurants/restaurants.types';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,

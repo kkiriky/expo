@@ -1,6 +1,6 @@
 import {applyToken, clearToken} from '@/api';
 import {CommonError} from '@/api/api.types';
-import {login, reIssueAccessToken} from '@/api/auth/authApi';
+import {login, reIssueAccessToken} from '@/api/auth/auth';
 import {userState} from '@/atoms/user';
 import authStorage from '@/storages/authStorage';
 import {useCallback, useState} from 'react';

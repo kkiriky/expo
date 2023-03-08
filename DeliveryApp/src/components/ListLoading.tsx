@@ -2,7 +2,11 @@ import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import React from 'react';
 import {colors} from '@/common/constants/colors';
 
-const ListLoading = (isLoading: boolean) => {
+interface ListLoadingProps {
+  isLoading: boolean;
+}
+
+const ListLoading = ({isLoading}: ListLoadingProps) => {
   if (!isLoading) {
     return <View />;
   }

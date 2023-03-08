@@ -3,8 +3,8 @@ import {
   getRestaurantDetail,
   getRestaurants,
   getReviews,
-} from '@/api/restaurants/restaurantsApi';
-import {Restaurant} from '@/api/restaurants/restaurantsApi.types';
+} from '@/api/restaurants/restaurants';
+import {Restaurant} from '@/api/restaurants/restaurants.types';
 import {
   InfiniteData,
   useInfiniteQuery,
@@ -31,16 +31,11 @@ export const useGetRestaurants = (count?: number) => {
   );
 };
 
-export const useRestaurantsRefresh = () => {
+export const useRefreshRestaurants = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(getRestaurants, {
+  return useMutation(() => getRestaurants(), {
     onSuccess: data => {
-      const pagedRestaurants =
-        queryClient.getQueryData<InfiniteRestaurants>('restaurants');
-      if (!pagedRestaurants) {
-        return;
-      }
       queryClient.setQueryData<InfiniteRestaurants>('restaurants', {
         pageParams: [data.data[0].id],
         pages: [data],

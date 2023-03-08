@@ -73,7 +73,7 @@
 
 1. npx expo install react-native-gesture-handler react-native-reanimated
 2. npm install -D @babel/plugin-proposal-export-namespace-from
-3. babel.config.js 설정
+3. babel.config.js 설정  
    module.exports = function (api) {  
    &emsp;api.cache(true);  
    &emsp;return {  
@@ -91,7 +91,7 @@
      \<TapGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>  
     &emsp;{...}  
     \</TapGestureHandler>
-  - _PanGestureHandler_: 드래그 앤 드롭을 인식
+  - _PanGestureHandler_: 드래그 앤 드롭을 인식  
     \<PanGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>  
     &emsp;{...}  
     \</PanGestureHandler>

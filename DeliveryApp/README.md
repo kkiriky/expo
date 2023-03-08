@@ -17,7 +17,7 @@
 - 에러 인터셉터:
   - **return**: **이전 요청에 대한 응답**
   - **throw**: **이전 요청에 대한 에러**
-- 에러 인터셉터 처리 중 **재요청**을 해서 받은 **응답을 반환**해야만 함.
+- **재요청**을 했을 경우 서버에서 받은 **응답을 반환**해야만 함.
 
 ### FlatList
 
@@ -28,13 +28,13 @@
   => 즉, 전체 리스트의 최하단을 기준으로 300만큼 떨어진 지점에 도달하면 트리거
 - FlatList 내부에는 **ScroolView** 컴포넌트가 존재 / *contentContainerStyle*과 관련
 - ScrollView: **"flewGrow: 1"** 이 default value
-  - ScrollView에 높이(absolute size)를 설정하면 스크롤이 동작하지 않음
-  - 따라서 FlatList의 contentContainerStyle에 flex:1을 설정하면 절대적인 크기가 되어버리므로 스크롤이 동작하지 않게됨
+  - ScrollView에 높이(_absolute size_)를 설정하면 스크롤이 동작하지 않음
+  - 따라서 FlatList의 contentContainerStyle에 flex:1을 설정하면 *absolute size*가 되어버리므로 스크롤이 동작하지 않게 됨
 
 > **flex 1 vs flexGrow 1**
 >
 > - flex:1(**Absolute Sizing**) => flex-grow: 1 / flex-shrink: 1 / flex-basis: 0
-> - flexGrow:1(**Relative Sizing**) => flex-grow: 1 / flex-shrink: 1 / flex-basis: auto
+> - flexGrow:1(**Relative Sizing**) => flex-grow: 1 / flex-shrink: 1 / flex-basis: auto  
 >   https://stackoverflow.com/questions/43520932/make-flex-grow-expand-items-based-on-their-original-size
 
 ### SafeArea & React Navigation

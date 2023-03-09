@@ -8,6 +8,17 @@ const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  errorMessage: {
+    fontSize: 12,
+    color: 'red',
+    marginVertical: 4,
+    marginLeft: 8,
+    lineHeight: 16,
+  },
+  errorBorder: {
+    borderWidth: 1,
+    borderColor: 'red',
+  },
 });
 
 export default globalStyles;

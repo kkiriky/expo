@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {colors} from '@/common/constants/colors';
+import globalStyles from '@/styles/globalStyles';
 
 interface BorderedInputProps {
   placeholder: string;
@@ -16,10 +17,11 @@ interface BorderedInputProps {
   keyboardType?: KeyboardTypeOptions;
   returnKeyType: ReturnKeyTypeOptions;
   secureTextEntry?: boolean;
+  isError: boolean;
 }
 
 const BorderedInput = React.forwardRef<TextInput, BorderedInputProps>(
-  ({hasMarginBottom, ...rest}, ref) => {
+  ({hasMarginBottom, isError, ...rest}, ref) => {
     const [focused, setFocused] = useState(false);
 
     const onFocus = useCallback(() => setFocused(true), []);
@@ -31,6 +33,7 @@ const BorderedInput = React.forwardRef<TextInput, BorderedInputProps>(
           styles.input,
           hasMarginBottom && styles.marginBottom,
           focused && styles.focused,
+          isError && globalStyles.errorBorder,
         ]}
         placeholderTextColor={colors.bodyText}
         cursorColor={colors.primary} // android

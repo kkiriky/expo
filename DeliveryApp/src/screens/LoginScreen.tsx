@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {colors} from '@/common/constants/colors';
 import BorderedInput from '@/components/BorderedInput';
 import CustomButton from '@/components/CustomButton';
@@ -7,10 +7,25 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useLogin} from '@/hooks/useAuth';
 import base64 from 'react-native-base64';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Controller, useForm, SubmitHandler} from 'react-hook-form';
+import globalStyles from '@/styles/globalStyles';
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<LoginForm>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
   const passwordRef = useRef<TextInput>(null);
 
   const {mutate: login, isLoading} = useLogin();
@@ -19,13 +34,16 @@ const LoginScreen = () => {
     passwordRef.current?.focus();
   }, []);
 
-  const onLogin = useCallback(() => {
-    login(base64.encode(`${email}:${password}`));
-  }, [email, login, password]);
+  const onSubmit: SubmitHandler<LoginForm> = useCallback(
+    value => {
+      login(base64.encode(`${value.email}:${value.password}`));
+    },
+    [login],
+  );
 
   const onSubmitEditingPassword = useCallback(() => {
-    onLogin();
-  }, [onLogin]);
+    handleSubmit(onSubmit)();
+  }, [handleSubmit, onSubmit]);
 
   return (
     <SafeAreaView>
@@ -45,29 +63,54 @@ const LoginScreen = () => {
           />
         </View>
 
-        <BorderedInput
-          placeholder="이메일을 입력해주세요."
-          keyboardType="email-address"
-          returnKeyType="next"
-          hasMarginBottom
-          value={email}
-          onChangeText={setEmail}
-          onSubmitEditing={onSubmitEditingEmail}
+        <Controller
+          control={control}
+          name="email"
+          rules={{required: true}}
+          render={({field: {value, onChange}}) => (
+            <BorderedInput
+              placeholder="이메일을 입력해주세요."
+              keyboardType="email-address"
+              returnKeyType="next"
+              hasMarginBottom={!errors.email}
+              value={value}
+              onChangeText={onChange}
+              onSubmitEditing={onSubmitEditingEmail}
+              isError={!!errors.email}
+            />
+          )}
         />
-        <BorderedInput
-          placeholder="비밀번호를 입력해주세요."
-          returnKeyType="join"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          onSubmitEditing={onSubmitEditingPassword}
-          ref={passwordRef}
+        {errors.email && (
+          <Text style={globalStyles.errorMessage}>이메일을 입력해주세요.</Text>
+        )}
+
+        <Controller
+          control={control}
+          name="password"
+          rules={{required: true}}
+          render={({field: {value, onChange}}) => (
+            <BorderedInput
+              placeholder="비밀번호를 입력해주세요."
+              returnKeyType="join"
+              secureTextEntry
+              value={value}
+              onChangeText={onChange}
+              onSubmitEditing={onSubmitEditingPassword}
+              ref={passwordRef}
+              isError={!!errors.password}
+            />
+          )}
         />
+        {errors.password && (
+          <Text style={globalStyles.errorMessage}>
+            비밀번호를 입력해주세요.
+          </Text>
+        )}
 
         <View style={styles.buttonGroups}>
           <CustomButton
             text="로그인"
-            onPress={onLogin}
+            onPress={handleSubmit(onSubmit)}
             hasMarginBottom
             isLoading={isLoading}
           />

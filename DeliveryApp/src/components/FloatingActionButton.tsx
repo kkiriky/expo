@@ -1,13 +1,15 @@
-import {StyleSheet, View, Platform, Pressable, Text} from 'react-native';
-import React, {useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Platform,
+  Pressable,
+  Text,
+  ViewStyle,
+  Animated,
+} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {colors} from '@/common/constants/colors';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSequence,
-  withSpring,
-} from 'react-native-reanimated';
 
 interface FloatingActionButtonProps {
   onPress: () => void;
@@ -15,24 +17,45 @@ interface FloatingActionButtonProps {
 }
 
 const FloatingActionButton = ({onPress, count}: FloatingActionButtonProps) => {
-  const offset = useSharedValue(0);
+  const animation = useRef(new Animated.Value(0)).current;
+  // const animation = useSharedValue(0);
 
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: -offset.value / 2,
-        },
-        {
-          translateY: offset.value,
-        },
-      ],
-    };
-  });
+  const animatedStyles: Animated.WithAnimatedObject<ViewStyle> = {
+    transform: [
+      {translateX: Animated.multiply(-2 / 3, animation)},
+      {translateY: animation},
+    ],
+  };
+  // const animatedStyles = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       {translateX: (animation.value * -2) / 3},
+  //       {translateY: animation.value},
+  //     ],
+  //   };
+  // });
+
+  const changeAnimationValue = useCallback(() => {
+    Animated.sequence([
+      Animated.timing(animation, {
+        toValue: 5,
+        useNativeDriver: true,
+        duration: 100,
+      }),
+      Animated.spring(animation, {
+        toValue: 0,
+        useNativeDriver: true,
+        tension: 45,
+        friction: 5,
+        velocity: 100,
+      }),
+    ]).start();
+    // animation.value = withSequence(withSpring(0, {velocity: 100})); // ?????
+  }, [animation]);
 
   useEffect(() => {
-    offset.value = withSequence(withSpring(0, {velocity: 120}));
-  }, [count, offset]);
+    changeAnimationValue();
+  }, [changeAnimationValue, count]);
 
   return (
     <View style={styles.buttonWrapper}>

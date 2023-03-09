@@ -1,7 +1,13 @@
 import {StyleSheet, View, Platform, Pressable, Text} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {colors} from '@/common/constants/colors';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSequence,
+  withSpring,
+} from 'react-native-reanimated';
 
 interface FloatingActionButtonProps {
   onPress: () => void;
@@ -9,6 +15,25 @@ interface FloatingActionButtonProps {
 }
 
 const FloatingActionButton = ({onPress, count}: FloatingActionButtonProps) => {
+  const offset = useSharedValue(0);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: -offset.value / 2,
+        },
+        {
+          translateY: offset.value,
+        },
+      ],
+    };
+  });
+
+  useEffect(() => {
+    offset.value = withSequence(withSpring(0, {velocity: 120}));
+  }, [count, offset]);
+
   return (
     <View style={styles.buttonWrapper}>
       <Pressable
@@ -18,12 +43,10 @@ const FloatingActionButton = ({onPress, count}: FloatingActionButtonProps) => {
           styles.button,
           pressed && Platform.select({ios: styles.pressed}),
         ]}>
-        <View>
-          <MaterialIcons name="shopping-basket" color="#fff" size={24} />
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{count}</Text>
-          </View>
-        </View>
+        <MaterialIcons name="shopping-basket" color="#fff" size={24} />
+        <Animated.View style={[styles.badge, animatedStyles]}>
+          <Text style={styles.badgeText}>{count}</Text>
+        </Animated.View>
       </Pressable>
     </View>
   );
@@ -64,8 +87,8 @@ const styles = StyleSheet.create({
   },
   badge: {
     position: 'absolute',
-    top: -3,
-    right: -7,
+    top: 8,
+    right: 5,
     backgroundColor: '#fff',
     width: 16,
     height: 16,

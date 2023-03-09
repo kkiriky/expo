@@ -38,18 +38,23 @@ const ProductCard = ({
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{product.name}</Text>
             {isBasket && (
-              <Pressable
-                onPress={onRemoveForce}
-                android_ripple={{color: '#eee'}}
-                style={({pressed}) =>
-                  pressed && Platform.select({ios: {backgroundColor: '#eee'}})
-                }>
-                <MaterialIcons
-                  name="delete-forever"
-                  color={colors.primary}
-                  size={18}
-                />
-              </Pressable>
+              <View style={styles.delteButtonWrapper}>
+                <Pressable
+                  onPress={onRemoveForce}
+                  hitSlop={8}
+                  android_ripple={{color: '#eee'}}
+                  style={({pressed}) => [
+                    styles.deleteButton,
+                    pressed &&
+                      Platform.select({ios: {backgroundColor: '#eee'}}),
+                  ]}>
+                  <MaterialIcons
+                    name="delete-forever"
+                    color={colors.primary}
+                    size={18}
+                  />
+                </Pressable>
+              </View>
             )}
           </View>
           <Text
@@ -111,5 +116,15 @@ const styles = StyleSheet.create({
   },
   marginBottom: {
     marginBottom: 10,
+  },
+  delteButtonWrapper: {
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  deleteButton: {
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

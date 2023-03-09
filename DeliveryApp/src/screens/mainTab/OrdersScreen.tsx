@@ -5,7 +5,7 @@ import {Order} from '@/api/order/order.types';
 import OrderCard from '@/components/OrderCard';
 import {colors} from '@/common/constants/colors';
 import ListLoading from '@/components/ListLoading';
-import CenterLoading from '@/components/CenterLoading';
+import OrderLoader from '@/components/loader/OrderLoader';
 
 const OrdersScreen = () => {
   const {data, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage} =
@@ -36,7 +36,14 @@ const OrdersScreen = () => {
   }, [refresh, refreshing]);
 
   if (isLoading) {
-    return <CenterLoading />;
+    return (
+      <FlatList
+        data={[...Array(10)]}
+        ItemSeparatorComponent={Separator}
+        renderItem={() => <OrderLoader />}
+        contentContainerStyle={[styles.contentContainer]}
+      />
+    );
   }
 
   return (

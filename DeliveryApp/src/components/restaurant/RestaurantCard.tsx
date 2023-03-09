@@ -5,17 +5,22 @@ import globalStyles from '@/styles/globalStyles';
 import RestaurantCardMeta from './RestaurantCardMeta';
 import {Restaurant} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
+import DetailLoader from '../loader/DetailLoader';
+import TitleLoader from '../loader/TitleLoader';
+import ProductLoader from '../loader/ProductLoader';
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
   isDetail?: boolean;
   detail?: string;
+  isDetailLoading?: boolean;
 }
 
 const RestaurantCard = ({
   restaurant,
   isDetail,
   detail,
+  isDetailLoading,
 }: RestaurantCardProps) => {
   return (
     <>
@@ -27,7 +32,6 @@ const RestaurantCard = ({
       <View style={isDetail && styles.detailLayout}>
         <Text style={styles.title}>{restaurant.name}</Text>
         <Text style={styles.tags}>{restaurant.tags.join('·')}</Text>
-
         <View style={[globalStyles.row, styles.metaContainer]}>
           <RestaurantCardMeta iconName="star" text={restaurant.ratings} />
           <Text>·</Text>
@@ -46,7 +50,25 @@ const RestaurantCard = ({
             text={restaurant.deliveryFee}
           />
         </View>
+
         {isDetail && detail && <Text style={styles.detail}>{detail}</Text>}
+        {isDetailLoading && (
+          <>
+            <View style={styles.loading}>
+              <DetailLoader />
+            </View>
+
+            <View style={styles.loading}>
+              <TitleLoader />
+            </View>
+
+            {[...Array(4)].map((_, i) => (
+              <View key={i} style={styles.loading}>
+                <ProductLoader />
+              </View>
+            ))}
+          </>
+        )}
       </View>
     </>
   );
@@ -87,5 +109,8 @@ const styles = StyleSheet.create({
     color: colors.bodyText,
     marginVertical: 12,
     fontSize: 12,
+  },
+  loading: {
+    marginTop: 8,
   },
 });

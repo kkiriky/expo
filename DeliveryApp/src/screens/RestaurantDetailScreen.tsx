@@ -22,8 +22,12 @@ const RestaurantDetailScreen = ({
   navigation,
 }: RootStackScreenProps<'RestaurantDetail'>) => {
   // Restaurant Detail
-  const {data: restaurantDetail} = useGetRestaurantDetail(
+  const {data: restaurantDetail, isFetching} = useGetRestaurantDetail(
     route.params.restaurant,
+  );
+  const isDetailLoading = useMemo(
+    () => !restaurantDetail.detail && isFetching,
+    [isFetching, restaurantDetail.detail],
   );
 
   // Reviews
@@ -79,6 +83,7 @@ const RestaurantDetailScreen = ({
               restaurant={restaurantDetail}
               isDetail
               detail={restaurantDetail.detail}
+              isDetailLoading={isDetailLoading}
             />
 
             {restaurantDetail.products && (

@@ -12,7 +12,7 @@ import ProductCard from '@/components/product/ProductCard';
 import ListLoading from '@/components/ListLoading';
 import {colors} from '@/common/constants/colors';
 import {MainTabScreenProps} from '@/routes/routes.types';
-import CenterLoading from '@/components/CenterLoading';
+import ProductLoader from '@/components/loader/ProductLoader';
 
 const ProductsScreen = ({navigation}: MainTabScreenProps<'Products'>) => {
   const {data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage} =
@@ -54,7 +54,13 @@ const ProductsScreen = ({navigation}: MainTabScreenProps<'Products'>) => {
   );
 
   if (isLoading) {
-    return <CenterLoading />;
+    return (
+      <FlatList
+        data={[...Array(8)]}
+        ItemSeparatorComponent={Separator}
+        renderItem={() => <ProductLoader />}
+      />
+    );
   }
 
   return (

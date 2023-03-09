@@ -64,6 +64,8 @@
 - **initialData**를 설정하면 캐시에 값이 남음.
 - **staleTime**과 같이 설정하면, initialData 캐시가 있으므로, 초기에 데이터 요청을 하지 않음
 - **initialData** 또는 **placeholderData**를 이용하여 부분 데이터를 미리 보여줄 수 있음.
+- **initialData** 또는 **placeholderData**를 설정하면 isLoading이 false가 됨.  
+  => 부분 데이터의 유무(post.detail)와 isFetching을 조합하여 isLoading을 만들어서 사용
 
 ### React Native Reanimated
 

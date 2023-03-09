@@ -54,7 +54,7 @@ export const useGetRestaurantDetail = (restaurant: Restaurant) => {
     {
       enabled: !!restaurant.id,
       initialData: restaurant as RestaurantDetail,
-      // placeholderData: restaurant,
+      // placeholderData: restaurant as RestaurantDetail,
     },
   );
 };

@@ -79,7 +79,8 @@ const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
           <RefreshControl
             onRefresh={onRefresh}
             refreshing={refreshing}
-            colors={[colors.primary]}
+            colors={[colors.primary]} // android
+            tintColor={colors.primary} // ios
           />
         }
       />

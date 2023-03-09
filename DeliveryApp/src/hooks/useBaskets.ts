@@ -9,7 +9,7 @@ const basketsKey = ['baskets'];
 export const useGetBaskets = () => {
   return useQuery(basketsKey, getBaskets, {
     placeholderData: [] as BasketItem[],
-    staleTime: 1000 * 60 * 5,
+    // staleTime: 1000 * 60 * 5,
   });
 };
 

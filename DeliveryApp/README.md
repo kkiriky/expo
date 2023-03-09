@@ -40,8 +40,10 @@
 ### SafeArea & React Navigation
 
 - React Navigation을 사용하는 경우 이미 SafeAreaProvider가 적용된 것
-- header는 safe area내에서 있다는 것을 보장함.  
+- header와 bottom tab은 safe area내에서 있다는 것을 보장함.  
   그러나 header를 없애면 safe area가 보장되지 않으므로 반드시 SafeAreaView 또는 useSafeAreaInsets를 사용할 것(useSafeAreaInsets 권장)
+- Stack Screen에서는 bottom tab이 없기 때문에, 하단에는 Safe Area Inset이 적용되지 않음.  
+  필요에 따라 하단에 inset이 필요한 경우, useSafeAreaInsets를 이용하여 bottom에 적용
 
 ### React Navigation
 
@@ -50,6 +52,12 @@
   - 따라서 상태가 변경되어도 리렌더링이 발생하지 않음
 - nesting navigation
   - navigation.push('MainTab', {screen: 'Orders'})
+
+> - headerBackVisible: 현재 스크린에서 back button과 back title을 보여줄지
+> - headerLeft: 현재 스크린에서 headerBack 위치에 컴포넌트를 위치시킴  
+>   back button과 같이 보여주려면 headerBackVisible: true 로 설정
+> - headerBackTitle: 이전스크린이라는데, 동작안함
+> - headerBackTitleVisible: 이전 스크린
 
 ### React Query
 
@@ -60,7 +68,3 @@
 ### React Native Reanimated
 
 - **withSequence**: ???
-
-### IOS
-
-- SafeAreaView

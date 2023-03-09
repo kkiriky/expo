@@ -59,7 +59,8 @@ const OrdersScreen = () => {
         <RefreshControl
           onRefresh={onRefresh}
           refreshing={refreshing}
-          colors={[colors.primary]}
+          colors={[colors.primary]} // android
+          tintColor={colors.primary} // ios
         />
       }
     />

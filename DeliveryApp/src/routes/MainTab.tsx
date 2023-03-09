@@ -7,6 +7,7 @@ import {MainTabParamList} from './routes.types';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {colors} from '@/common/constants/colors';
+import {Platform} from 'react-native';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -14,10 +15,13 @@ const MainTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {paddingTop: 4, paddingBottom: 8, height: 50},
-        tabBarActiveTintColor: colors.primary,
-        tabBarLabelStyle: {fontWeight: '600'},
         headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarLabelStyle: {fontWeight: '600', fontSize: 12},
+        tabBarStyle: Platform.select({
+          android: {paddingTop: 12, paddingBottom: 12, height: 66},
+          ios: {paddingTop: 4},
+        }),
       }}>
       <Tab.Screen
         name="Restaurants"

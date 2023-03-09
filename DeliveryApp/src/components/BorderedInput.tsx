@@ -33,7 +33,8 @@ const BorderedInput = React.forwardRef<TextInput, BorderedInputProps>(
           focused && styles.focused,
         ]}
         placeholderTextColor={colors.bodyText}
-        cursorColor={colors.primary}
+        cursorColor={colors.primary} // android
+        selectionColor={colors.primary}
         autoCapitalize="none"
         autoCorrect={false}
         onFocus={onFocus}

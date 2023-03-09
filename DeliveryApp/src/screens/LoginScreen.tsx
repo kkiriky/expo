@@ -28,8 +28,8 @@ const LoginScreen = () => {
   }, [onLogin]);
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <SafeAreaView>
+    <SafeAreaView>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>환영합니다!</Text>
         <Text style={styles.subText}>
           {
@@ -78,8 +78,8 @@ const LoginScreen = () => {
             isLoading={false}
           />
         </View>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
 

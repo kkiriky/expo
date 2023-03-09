@@ -24,6 +24,9 @@ const RootStack = () => {
         headerShadowVisible: false,
         headerTitleStyle: {fontWeight: '600'},
         headerTitleAlign: 'center',
+        headerTintColor: '#000',
+
+        headerBackTitleVisible: false,
       }}>
       {user ? (
         <>
@@ -32,6 +35,7 @@ const RootStack = () => {
             component={MainTab}
             options={{
               headerTitle: 'Delivery',
+              headerBackVisible: false,
             }}
           />
           <Stack.Screen
@@ -39,6 +43,7 @@ const RootStack = () => {
             component={RestaurantDetailScreen}
             options={{
               headerTitle: '',
+              // headerLeft: HeaderBack
             }}
           />
           <Stack.Screen
@@ -46,14 +51,13 @@ const RootStack = () => {
             component={BasketScreen}
             options={{
               headerTitle: '장바구니',
+              // headerLeft: HeaderBack
             }}
           />
           <Stack.Screen
             name="OrderComplete"
             component={OrderCompleteScreen}
-            options={{
-              headerTitle: '주문완료',
-            }}
+            options={{headerShown: false}}
           />
         </>
       ) : (

@@ -13,11 +13,13 @@ import {Product} from '@/api/products/products.types';
 import {BasketItem} from '@/api/user/user.types';
 import {useCreateOrder} from '@/hooks/useOrder';
 import {v4 as uuidV4} from 'uuid';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const BasketScreen = () => {
   const {data: baskets} = useGetBaskets();
   const {addToBasket} = useAddToBasket();
   const {removeFromBasket} = useRemoveFromBasket();
+  const {bottom} = useSafeAreaInsets();
 
   const basketPrice = useMemo(() => {
     if (!baskets) {
@@ -99,7 +101,7 @@ const BasketScreen = () => {
   }
 
   return (
-    <View style={globalStyles.full}>
+    <View style={[globalStyles.full, {paddingBottom: bottom}]}>
       <FlatList
         data={baskets}
         ItemSeparatorComponent={Separtor}

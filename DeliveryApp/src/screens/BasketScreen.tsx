@@ -69,6 +69,7 @@ const BasketScreen = () => {
     },
     [removeFromBasket],
   );
+
   const onRemoveForce = useCallback(
     (productId: string) => () => {
       removeFromBasket({productId, isForce: true});

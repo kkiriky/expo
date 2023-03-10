@@ -6,6 +6,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
 import Toast from 'react-native-toast-message';
 import toastConfig from './components/toast/toastConfig';
+import Modals from './components/modals/Modals';
 
 // import {
 //   useFonts,
@@ -59,6 +60,7 @@ export default function App() {
             <RootStack />
 
             <Toast config={toastConfig} />
+            <Modals />
           </NavigationContainer>
         </QueryClientProvider>
       </RecoilRoot>

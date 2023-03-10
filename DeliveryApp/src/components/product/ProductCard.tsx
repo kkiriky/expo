@@ -1,11 +1,15 @@
 import {Image, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
 import {RestaurantProduct} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import ProductCardControl from './ProductCardControl';
+import {modals} from '../modals/Modals';
+import useModal from '@/hooks/useModal';
+
+const {askDialog} = modals;
 
 interface ProductCardProps {
   product: RestaurantProduct;
@@ -26,6 +30,20 @@ const ProductCard = ({
   onRemove,
   onRemoveForce,
 }: ProductCardProps) => {
+  const {openModal} = useModal();
+
+  const onAskRemove = useCallback(() => {
+    if (!onRemoveForce) return;
+
+    openModal(askDialog, {
+      title: '장바구니',
+      message: `${product.name}를(을) 장바구니에서 삭제하겠습니까?`,
+      confirmText: '삭제',
+      isDestructive: true,
+      onConfirm: onRemoveForce,
+    });
+  }, [onRemoveForce, openModal, product.name]);
+
   return (
     <>
       <View style={[styles.container, hasMarginBottom && styles.marginBottom]}>
@@ -40,7 +58,7 @@ const ProductCard = ({
             {isBasket && (
               <View style={styles.delteButtonWrapper}>
                 <Pressable
-                  onPress={onRemoveForce}
+                  onPress={onAskRemove}
                   hitSlop={8}
                   android_ripple={{color: '#eee'}}
                   style={({pressed}) => [

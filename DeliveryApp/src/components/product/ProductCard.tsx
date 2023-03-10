@@ -1,15 +1,23 @@
-import {Image, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useCallback} from 'react';
 import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
 import {RestaurantProduct} from '@/api/restaurants/restaurants.types';
 import {baseURL} from '@/api';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+// import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ProductCardControl from './ProductCardControl';
 import {modals} from '../modals/Modals';
 import useModal from '@/hooks/useModal';
-import {useActionSheet} from '@expo/react-native-action-sheet';
+// import {useActionSheet} from '@expo/react-native-action-sheet';
 
 const {askDialog} = modals;
 
@@ -33,7 +41,7 @@ const ProductCard = ({
   onRemoveForce,
 }: ProductCardProps) => {
   const {openModal} = useModal();
-  const {showActionSheetWithOptions} = useActionSheet();
+  // const {showActionSheetWithOptions} = useActionSheet();
 
   const onAskRemove = useCallback(() => {
     if (!onRemoveForce) return;
@@ -47,32 +55,40 @@ const ProductCard = ({
         onConfirm: onRemoveForce,
       });
     } else {
-      showActionSheetWithOptions(
-        {
-          title: '장바구니',
-          message: `${product.name}를(을) 장바구니에서 삭제하겠습니까?`,
-          options: ['삭제', '취소'],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-          cancelButtonTintColor: '#000',
-          // only android
-          icons: [
-            <MaterialIcons name="delete-forever" color="#d32f2f" size={20} />,
-            <MaterialCommunityIcons name="close-circle-outline" size={20} />,
-          ],
-          containerStyle: {
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-          },
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            onRemoveForce();
-          }
-        },
+      Alert.alert(
+        '장바구니',
+        `${product.name}를(을) 장바구니에서 삭제하겠습니까?`,
+        [
+          {text: '취소', style: 'cancel'},
+          {text: '삭제', onPress: onRemoveForce, style: 'destructive'},
+        ],
       );
     }
-  }, [onRemoveForce, openModal, product.name, showActionSheetWithOptions]);
+    // showActionSheetWithOptions(
+    //   {
+    //     title: '장바구니',
+    //     message: `${product.name}를(을) 장바구니에서 삭제하겠습니까?`,
+    //     options: ['삭제', '취소'],
+    //     destructiveButtonIndex: 0,
+    //     cancelButtonIndex: 1,
+    //     cancelButtonTintColor: '#000',
+    //     // only android
+    //     icons: [
+    //       <MaterialIcons name="delete-forever" color="#d32f2f" size={20} />,
+    //       <MaterialCommunityIcons name="close-circle-outline" size={20} />,
+    //     ],
+    //     containerStyle: {
+    //       borderTopLeftRadius: 16,
+    //       borderTopRightRadius: 16,
+    //     },
+    //   },
+    //   buttonIndex => {
+    //     if (buttonIndex === 0) {
+    //       onRemoveForce();
+    //     }
+    //   },
+    // );
+  }, [onRemoveForce, openModal, product.name]);
 
   return (
     <>

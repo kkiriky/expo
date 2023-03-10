@@ -28,7 +28,7 @@ const LoginScreen = () => {
       password: '',
     },
   });
-  const passwordRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput | null>(null);
 
   const {mutate: login, isLoading} = useLogin();
 
@@ -110,7 +110,7 @@ const LoginScreen = () => {
           control={control}
           name="password"
           rules={{required: '비밀번호를 입력해주세요.'}}
-          render={({field: {value, onChange}}) => (
+          render={({field: {value, onChange, ref}}) => (
             <BorderedInput
               placeholder="비밀번호를 입력해주세요."
               returnKeyType="join"
@@ -118,7 +118,8 @@ const LoginScreen = () => {
               value={value}
               onChangeText={onChange}
               onSubmitEditing={onSubmitEditingPassword}
-              ref={passwordRef}
+              ref={ref}
+              inputRef={passwordRef}
               isError={!!errors.password}
             />
           )}

@@ -70,3 +70,19 @@
 ### React Native Reanimated
 
 - **withSequence**: ???
+
+### Toast
+
+- react-native-toast-messsage
+
+### Alert
+
+- android에서는 style 설정이 안되므로, Modal을 직접 만들어서 사용
+
+### Modal
+
+- Recoil을 이용하여 모달을 전역에서 관리하고, imperative 으로 사용 가능
+
+### Action Sheet
+
+- @expo/react-native-action-sheet: IOS는 native / Android는 pure JS

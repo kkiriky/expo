@@ -18,14 +18,30 @@ interface BorderedInputProps {
   returnKeyType: ReturnKeyTypeOptions;
   secureTextEntry?: boolean;
   isError: boolean;
+  inputRef?: React.MutableRefObject<TextInput | null>;
 }
 
 const BorderedInput = React.forwardRef<TextInput, BorderedInputProps>(
-  ({hasMarginBottom, isError, ...rest}, ref) => {
+  ({hasMarginBottom, isError, inputRef, ...rest}, ref) => {
     const [focused, setFocused] = useState(false);
 
     const onFocus = useCallback(() => setFocused(true), []);
     const onBlur = useCallback(() => setFocused(false), []);
+
+    const setRef = useCallback(
+      (node: TextInput | null) => {
+        if (inputRef && node) {
+          inputRef.current = node;
+        }
+
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [inputRef, ref],
+    );
 
     return (
       <TextInput
@@ -42,7 +58,7 @@ const BorderedInput = React.forwardRef<TextInput, BorderedInputProps>(
         autoCorrect={false}
         onFocus={onFocus}
         onBlur={onBlur}
-        ref={ref}
+        ref={setRef}
         {...rest}
       />
     );

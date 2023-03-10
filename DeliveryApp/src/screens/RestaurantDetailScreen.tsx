@@ -16,6 +16,8 @@ import ReviewCard from '@/components/ReviewCard';
 import ListLoading from '@/components/ListLoading';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import {useAddToBasket, useGetBaskets} from '@/hooks/useBaskets';
+import Toast from 'react-native-toast-message';
+import {toastShowOptions} from '@/components/toast/toastConfig';
 
 const RestaurantDetailScreen = ({
   route,
@@ -65,6 +67,10 @@ const RestaurantDetailScreen = ({
   const onAddToBaseket = useCallback(
     (restaurantProduct: RestaurantProduct) => () => {
       addToBasket({...restaurantProduct, restaurant: restaurantDetail});
+      Toast.show({
+        ...toastShowOptions,
+        text1: '장바구니에 담았습니다.',
+      });
     },
     [addToBasket, restaurantDetail],
   );

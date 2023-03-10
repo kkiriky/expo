@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {colors} from '@/common/constants/colors';
+import globalStyles from '@/styles/globalStyles';
 
 interface SignButtonProps {
   text: string;
@@ -77,18 +78,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     backgroundColor: colors.primary,
     borderRadius: 8,
-    ...Platform.select({
-      android: {
-        overflow: 'hidden',
-        elevation: 3,
-      },
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: {width: 0, height: 5},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-      },
-    }),
+    ...globalStyles.shadow,
   },
   button: {
     height: 48,

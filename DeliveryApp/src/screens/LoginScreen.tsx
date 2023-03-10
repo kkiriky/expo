@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {colors} from '@/common/constants/colors';
 import BorderedInput from '@/components/BorderedInput';
 import CustomButton from '@/components/CustomButton';
@@ -9,6 +9,8 @@ import base64 from 'react-native-base64';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import globalStyles from '@/styles/globalStyles';
+import Toast from 'react-native-toast-message';
+import {toastShowOptions} from '@/components/toast/toastConfig';
 
 interface LoginForm {
   email: string;
@@ -29,6 +31,25 @@ const LoginScreen = () => {
   const passwordRef = useRef<TextInput>(null);
 
   const {mutate: login, isLoading} = useLogin();
+
+  useEffect(() => {
+    if (errors.email?.message) {
+      Toast.show({
+        ...toastShowOptions,
+        type: 'warn',
+        text1: errors.email.message,
+      });
+      return;
+    }
+
+    if (errors.password?.message) {
+      Toast.show({
+        ...toastShowOptions,
+        type: 'warn',
+        text1: errors.password.message,
+      });
+    }
+  }, [errors.email, errors.password]);
 
   const onSubmitEditingEmail = useCallback(() => {
     passwordRef.current?.focus();
@@ -66,8 +87,8 @@ const LoginScreen = () => {
         <Controller
           control={control}
           name="email"
-          rules={{required: true}}
-          render={({field: {value, onChange}}) => (
+          rules={{required: '이메일을 입력해주세요.'}}
+          render={({field: {value, onChange, ref}}) => (
             <BorderedInput
               placeholder="이메일을 입력해주세요."
               keyboardType="email-address"
@@ -77,17 +98,18 @@ const LoginScreen = () => {
               onChangeText={onChange}
               onSubmitEditing={onSubmitEditingEmail}
               isError={!!errors.email}
+              ref={ref}
             />
           )}
         />
         {errors.email && (
-          <Text style={globalStyles.errorMessage}>이메일을 입력해주세요.</Text>
+          <Text style={globalStyles.errorMessage}>{errors.email.message}</Text>
         )}
 
         <Controller
           control={control}
           name="password"
-          rules={{required: true}}
+          rules={{required: '비밀번호를 입력해주세요.'}}
           render={({field: {value, onChange}}) => (
             <BorderedInput
               placeholder="비밀번호를 입력해주세요."
@@ -103,7 +125,7 @@ const LoginScreen = () => {
         />
         {errors.password && (
           <Text style={globalStyles.errorMessage}>
-            비밀번호를 입력해주세요.
+            {errors.password.message}
           </Text>
         )}
 

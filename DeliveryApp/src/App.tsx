@@ -4,6 +4,8 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {RecoilRoot} from 'recoil';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import * as SplashScreen from 'expo-splash-screen';
+import Toast from 'react-native-toast-message';
+import toastConfig from './components/toast/toastConfig';
 
 // import {
 //   useFonts,
@@ -55,6 +57,8 @@ export default function App() {
         <QueryClientProvider client={client}>
           <NavigationContainer theme={theme}>
             <RootStack />
+
+            <Toast config={toastConfig} />
           </NavigationContainer>
         </QueryClientProvider>
       </RecoilRoot>

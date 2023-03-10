@@ -10,6 +10,8 @@ import {
 import React, {useCallback, useEffect, useRef} from 'react';
 import {colors} from '@/common/constants/colors';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import globalStyles from '@/styles/globalStyles';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface FloatingActionButtonProps {
   onPress: () => void;
@@ -17,6 +19,7 @@ interface FloatingActionButtonProps {
 }
 
 const FloatingActionButton = ({onPress, count}: FloatingActionButtonProps) => {
+  const {bottom} = useSafeAreaInsets();
   const animation = useRef(new Animated.Value(0)).current;
   // const animation = useSharedValue(0);
 
@@ -58,7 +61,11 @@ const FloatingActionButton = ({onPress, count}: FloatingActionButtonProps) => {
   }, [changeAnimationValue, count]);
 
   return (
-    <View style={styles.buttonWrapper}>
+    <View
+      style={[
+        styles.buttonWrapper,
+        Platform.select({ios: {bottom: bottom === 0 ? 16 : bottom + 4}}),
+      ]}>
       <Pressable
         onPress={onPress}
         android_ripple={{color: colors.activePrimary}}
@@ -85,19 +92,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: colors.primary,
     borderRadius: 24,
-
-    ...Platform.select({
-      android: {
-        overflow: 'hidden',
-        elevation: 5,
-      },
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 5},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-      },
-    }),
+    ...globalStyles.shadow,
   },
   button: {
     width: 48,

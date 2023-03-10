@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import Toast from 'react-native-toast-message';
 import toastConfig from './components/toast/toastConfig';
 import Modals from './components/modals/Modals';
+import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 
 // import {
 //   useFonts,
@@ -57,7 +58,9 @@ export default function App() {
       <RecoilRoot>
         <QueryClientProvider client={client}>
           <NavigationContainer theme={theme}>
-            <RootStack />
+            <ActionSheetProvider>
+              <RootStack />
+            </ActionSheetProvider>
 
             <Toast config={toastConfig} />
             <Modals />

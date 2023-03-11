@@ -14,6 +14,7 @@ import globalStyles from '@/styles/globalStyles';
 import {colors} from '@/common/constants/colors';
 import {MainTabScreenProps} from '@/routes/routes.types';
 import ListLoading from '@/components/ListLoading';
+import useBackEffect from '@/hooks/useBackEffect';
 
 const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
   const {data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage} =
@@ -37,6 +38,7 @@ const RestaurantsScreen = ({navigation}: MainTabScreenProps<'Restaurants'>) => {
       })();
     }
   }, [isLoading]);
+  useBackEffect();
 
   const onEndReached = useCallback(() => {
     if (!hasNextPage || isFetchingNextPage) {

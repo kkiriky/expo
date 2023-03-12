@@ -19,7 +19,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#22a45d"
+      },
+      "package": "com.kkiri.DeliveryApp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5b103d6e-253c-48f6-81aa-90c5ae48a3f2"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5b103d6e-253c-48f6-81aa-90c5ae48a3f2"
     }
   }
 }

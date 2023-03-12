@@ -86,3 +86,13 @@
 ### Action Sheet
 
 - @expo/react-native-action-sheet: IOS는 native / Android는 pure JS
+
+### EAS Build & EAS Updates
+
+#### 초기 설정
+
+- expo install expo-updates && eas update:configure && eas build:configure
+
+#### 업데이트
+
+- eas update --branch preview --message "메시지"

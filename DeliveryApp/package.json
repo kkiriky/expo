@@ -34,7 +34,8 @@
     "react-native-svg": "13.4.0",
     "react-native-toast-message": "^2.1.6",
     "recoil": "^0.7.7",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "expo-updates": "~0.16.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

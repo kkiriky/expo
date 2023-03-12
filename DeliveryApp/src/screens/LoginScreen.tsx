@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {colors} from '@/common/constants/colors';
 import BorderedInput from '@/components/BorderedInput';
 import CustomButton from '@/components/CustomButton';
@@ -9,8 +9,6 @@ import base64 from 'react-native-base64';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Controller, useForm, SubmitHandler} from 'react-hook-form';
 import globalStyles from '@/styles/globalStyles';
-import Toast from 'react-native-toast-message';
-import {toastShowOptions} from '@/components/toast/toastConfig';
 
 interface LoginForm {
   email: string;
@@ -31,25 +29,6 @@ const LoginScreen = () => {
   const passwordRef = useRef<TextInput | null>(null);
 
   const {mutate: login, isLoading} = useLogin();
-
-  useEffect(() => {
-    if (errors.email?.message) {
-      Toast.show({
-        ...toastShowOptions,
-        type: 'warn',
-        text1: errors.email.message,
-      });
-      return;
-    }
-
-    if (errors.password?.message) {
-      Toast.show({
-        ...toastShowOptions,
-        type: 'warn',
-        text1: errors.password.message,
-      });
-    }
-  }, [errors.email, errors.password]);
 
   const onSubmitEditingEmail = useCallback(() => {
     passwordRef.current?.focus();

@@ -1,5 +1,35 @@
 # EXPO
 
+### 초기 설정
+
+### 1. 타입스크립트
+
+- npx create-expo-app -t expo-template-blank-typescript
+
+### 2. eslint & prettier
+
+- npm i -D eslint prettier @react-native-community/eslint-config  
+  (@typescript-eslint/parser @typescript-eslint/eslint-plugin 은 필요 없는 듯)
+- .eslintrc.js 설정  
+  module.exports = {  
+  &emsp;root: true,  
+  &emsp;extends: '@react-native-community',  
+  &emsp;rules: {  
+  &emsp;&emsp;'react/react-in-jsx-scope': 'off',  
+  &emsp;&emsp;'no-unused-vars': 'off',  
+  &emsp;&emsp;'@typescript-eslint/no-unused-vars': 'warn',  
+  &emsp;},  
+  };
+- .prettierrc.js 설정  
+  module.exports = {  
+  &emsp;arrowParens: 'avoid',  
+  &emsp;bracketSameLine: true,  
+  &emsp;bracketSpacing: false,  
+  &emsp;singleQuote: true,  
+  &emsp;trailingComma: 'all',  
+  };
+---
+
 ### Managed Workflow vs Bare Workflow
 
 - **Managed Workflow**: android, ios 네이티브와 관련된 디렉토리의 코드를 **직접 수정하지 않으면서** 개발하는 플로우
